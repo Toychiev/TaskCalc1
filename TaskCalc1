@@ -1,0 +1,103 @@
+/*программа "Калькулятор", принимает на вход два целых числа, и арифм. оператор между ними,
+ * разделенные пробелами. Числа на вход ограничены между 1 и 10 включительно*/
+
+import java.util.Arrays;
+import java.util.Scanner;                       //Scanner для приема строки с клавиатуры
+public class TaskCalc1 {
+
+    public static void main(String[] args) {
+
+        Scanner in = new Scanner(System.in);
+        System.out.println("Input:");                       //"Введите числа и оператор"
+        String userInput = in.nextLine();                   //вводим арифм. выражение
+        String[] userInputArray = null;                     //создаем строковый массив
+        userInputArray = userInput.split(" ");        //строковый массив заполняем "словами" из строки
+
+        /*Ограничить вход двумя числами и оператором, можно задать кол-во элементов строкового массива = 3*/
+        if (userInputArray.length == 3) {
+            String ia = userInputArray[0];                      //Теперь надо [0] и [2] строку преобразовать в int
+            //int a = Integer.parseInt(ia);
+            String ib = userInputArray[2];
+            //int b = Integer.parseInt(ib);
+            String x = userInputArray[1];
+            String[] romInp = {"I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
+            int romIntRes=0;
+            if (Arrays.asList(romInp).contains(ia) && Arrays.asList(romInp).contains(ib)) {
+                int a=0;
+                int b=0;
+                switch (ia) {
+                    case "I" -> a = 1;
+                    case "II"   -> a = 2;
+                    case "III"  -> a = 3;
+                    case "IV"   -> a = 4;
+                    case "V"    -> a = 5;
+                    case "VI"   -> a = 6;
+                    case "VII"  -> a = 7;
+                    case "VIII" -> a = 8;
+                    case "IX"   -> a = 9;
+                    case "X"    -> a = 10;
+                }
+                switch (ib) {
+                    case "I" -> b = 1;
+                    case "II"   -> b = 2;
+                    case "III"  -> b = 3;
+                    case "IV"   -> b = 4;
+                    case "V"    -> b = 5;
+                    case "VI"   -> b = 6;
+                    case "VII"  -> b = 7;
+                    case "VIII" -> b = 8;
+                    case "IX"   -> b = 9;
+                    case "X"    -> b = 10;
+                }
+                switch (x) {
+                    case "+" -> romIntRes = a+b;
+                    case "-" -> romIntRes = a-b;
+                    case "*" -> romIntRes = a*b;
+                    case "/" -> romIntRes = a/b;
+                }
+                //System.out.println(romIntRes);
+
+                String result = "";
+
+                while (romIntRes >= 10) {
+                    if (romIntRes % 10 >= 0) {
+                        result += "X";
+                        romIntRes -= 10;
+                    }
+                }
+                if (romIntRes >= 5 && romIntRes % 5 >= 0 ) {
+                    result += "V";
+                    romIntRes -= 5;
+                }
+                if (romIntRes >= 4 && romIntRes % 4 == 0 ) {
+                    result += "IV";
+                    romIntRes -= 4;
+                }
+                while (romIntRes > 0) {
+                    result += "I";
+                    romIntRes -=1;
+                }
+                System.out.println(result);
+
+            }
+
+            else if (1 <= Integer.parseInt(ia) && Integer.parseInt(ia) <= 10 && 1 <= Integer.parseInt(ib) && Integer.parseInt(ib) <= 10) {
+                int a = Integer.parseInt(ia);
+                int b = Integer.parseInt(ib);
+                switch (x) {
+                    case "+" -> System.out.print(a + b);
+                    case "-" -> System.out.print(a - b);
+                    case "*" -> System.out.print(a * b);
+                    case "/" -> System.out.print(a / b);
+                    default -> System.out.print("Операторы должны быть следующие: +, -, *, /");
+                }
+            }
+            else {
+                System.out.println("Калькулятор принимает на вход только целые числа от 1 до 10 включительно");
+            }
+        }
+        else {
+            System.out.println("формат математической операции не удовлетворяет заданию - два операнда и один оператор (+, -, /, *)");
+        }
+    }
+}
